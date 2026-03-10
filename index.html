@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" href="/public/favicon.png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- PWA -->
+  <link rel="manifest" href="/public/manifest.json" />
+
+  <title>Lar Imóveis ES</title>
+
+  <!-- SEO -->
+  <meta name="description" content="Encontre seu imóvel ideal para alugar ou comprar no Espírito Santo." />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Lar Imóveis ES" />
+  <meta property="og:description" content="Conectando pessoas ao imóvel ideal no ES." />
+  <meta property="og:image" content="/public/og-image.png" />
+  <meta property="og:type" content="website" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <!-- App -->
+  <script type="module" src="/src/main.js"></script>
+</head>
+
+<body>
+  <div id="root"></div>
+
+  <!-- Page tracking SPA -->
+  <script>
+    let lastPath = "";
+
+    function getPageNameFromPath(path) {
+      const segments = path.split("/").filter(Boolean);
+      return segments[0] || "home";
+    }
+
+    function trackPageView() {
+      const path = window.location.pathname;
+      if (path === lastPath) return;
+      lastPath = path;
+
+      const pageName = getPageNameFromPath(path);
+      console.log("Page view:", pageName);
+    }
+
+    const pushState = history.pushState;
+    history.pushState = function () {
+      pushState.apply(history, arguments);
+      trackPageView();
+    };
+
+    window.addEventListener("popstate", trackPageView);
+    trackPageView();
+  </script>
+</body>
+</html>
