@@ -1,60 +1,512 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-  <meta charset="UTF-8" />
-  <link rel="icon" href="/public/favicon.png" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<!doctype html>
+<html lang="pt-BR" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  <title>Grupo de Ofertas · Mercado Livre</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&amp;display=swap" rel="stylesheet">
+  <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-  <!-- PWA -->
-  <link rel="manifest" href="/public/manifest.json" />
+        html, body {
+            height: 100%;
+            width: 100%;
+        }
 
-  <title>Lar Imóveis ES</title>
+        body {
+            font-family: 'Nunito', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            background: linear-gradient(145deg, #ffe500 0%, #fff0b5 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
 
-  <!-- SEO -->
-  <meta name="description" content="Encontre seu imóvel ideal para alugar ou comprar no Espírito Santo." />
+        .card {
+            max-width: 520px;
+            width: 100%;
+            background-color: white;
+            border-radius: 48px 48px 40px 40px;
+            box-shadow: 0 30px 50px rgba(0, 0, 0, 0.2), 0 8px 20px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 3px solid rgba(255, 215, 0, 0.6);
+        }
 
-  <!-- Open Graph -->
-  <meta property="og:title" content="Lar Imóveis ES" />
-  <meta property="og:description" content="Conectando pessoas ao imóvel ideal no ES." />
-  <meta property="og:image" content="/public/og-image.png" />
-  <meta property="og:type" content="website" />
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 40px 60px rgba(0, 0, 0, 0.25), 0 12px 25px rgba(0, 0, 0, 0.18);
+        }
 
-  <!-- Twitter -->
-  <meta name="twitter:card" content="summary_large_image" />
+        .top-strip {
+            background: linear-gradient(90deg, #ffe600 0%, #ffd000 100%);
+            height: 22px;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+        }
 
-  <!-- App -->
-  <script type="module" src="/src/main.js"></script>
-</head>
+        .top-strip::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            animation: shimmer 2s infinite;
+        }
 
-<body>
-  <div id="root"></div>
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
 
-  <!-- Page tracking SPA -->
+        .content {
+            padding: 28px 30px 40px 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        h1.grupo-titulo {
+            font-size: 2.5rem;
+            font-weight: 900;
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+            text-transform: uppercase;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        h1.grupo-titulo span {
+            display: block;
+            font-size: 2.7rem;
+            background: linear-gradient(135deg, #003cff 0%, #0052ff 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            filter: drop-shadow(2px 2px 0 rgba(255, 230, 0, 0.5));
+        }
+
+        .logo-mercado-livre {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin: 12px 0 20px 0;
+            width: 100%;
+        }
+
+        .logo-mercado-livre .ml {
+            font-weight: 800;
+            font-size: 2rem;
+            color: #003cff;
+            background: white;
+            padding: 6px 22px;
+            border-radius: 50px;
+            box-shadow: 0 6px 0 #ffe600, 0 8px 15px rgba(0,0,0,0.1);
+            border: 2px solid #333;
+            transform: rotate(-1deg);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .ml-icon {
+            width: 32px;
+            height: 32px;
+        }
+
+        .desconto-mega {
+            background: linear-gradient(135deg, #ff1e3c 0%, #e6001a 100%);
+            border-radius: 100px;
+            padding: 12px 30px;
+            margin: 12px 0 18px 0;
+            box-shadow: 0 10px 0 #a5001a, 0 12px 25px rgba(0,0,0,0.25);
+            transform: rotate(0.5deg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            animation: pulse-discount 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse-discount {
+            0%, 100% { transform: rotate(0.5deg) scale(1); }
+            50% { transform: rotate(0.5deg) scale(1.02); }
+        }
+
+        .desconto-mega .ate {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: white;
+            text-shadow: 2px 2px 0 #a5001a;
+        }
+
+        .desconto-mega .porcentagem {
+            font-size: 3.5rem;
+            font-weight: 900;
+            color: white;
+            line-height: 1;
+            text-shadow: 4px 4px 0 #a5001a;
+            letter-spacing: -2px;
+        }
+
+        .desconto-mega .off {
+            font-size: 2rem;
+            font-weight: 900;
+            color: white;
+            text-shadow: 2px 2px 0 #a5001a;
+        }
+
+        .badge-exclusivo {
+            font-size: 1.2rem;
+            background: linear-gradient(135deg, #00a650 0%, #008c44 100%);
+            color: white;
+            font-weight: 700;
+            padding: 10px 30px;
+            border-radius: 40px;
+            margin: 16px 0 12px 0;
+            border: 2px solid #ffda1a;
+            box-shadow: inset 0 -3px 0 #007730, 0 4px 10px rgba(0,166,80,0.3);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .link-preview {
+            background: #f0f2f5;
+            width: 100%;
+            padding: 14px 20px;
+            border-radius: 16px;
+            margin: 12px 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border: 2px dashed #d0d5dd;
+        }
+
+        .link-icon {
+            width: 24px;
+            height: 24px;
+            color: #25d366;
+            flex-shrink: 0;
+        }
+
+        .link-text {
+            font-size: 0.95rem;
+            color: #666;
+            word-break: break-all;
+            text-align: left;
+        }
+
+        .cta-button {
+            background: linear-gradient(135deg, #25d366 0%, #128c7e 100%);
+            color: white;
+            font-size: 1.3rem;
+            font-weight: 800;
+            padding: 18px 40px;
+            border-radius: 60px;
+            border: none;
+            cursor: pointer;
+            margin-top: 16px;
+            width: 100%;
+            max-width: 340px;
+            box-shadow: 0 8px 0 #075e54, 0 10px 20px rgba(37, 211, 102, 0.3);
+            transition: all 0.15s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            text-decoration: none;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 11px 0 #075e54, 0 15px 30px rgba(37, 211, 102, 0.4);
+        }
+
+        .cta-button:active {
+            transform: translateY(4px);
+            box-shadow: 0 4px 0 #075e54, 0 6px 15px rgba(37, 211, 102, 0.3);
+        }
+
+        .whatsapp-icon {
+            width: 28px;
+            height: 28px;
+        }
+
+        .members-count {
+            margin-top: 18px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #666;
+            font-size: 0.95rem;
+            font-weight: 600;
+        }
+
+        .members-avatars {
+            display: flex;
+            margin-right: 5px;
+        }
+
+        .avatar {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            border: 2px solid white;
+            margin-left: -8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+        }
+
+        .avatar:first-child {
+            margin-left: 0;
+        }
+
+        .live-dot {
+            width: 8px;
+            height: 8px;
+            background: #00a650;
+            border-radius: 50%;
+            animation: live-pulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes live-pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.2); }
+        }
+
+        .urgency-text {
+            margin-top: 12px;
+            font-size: 0.9rem;
+            color: #ff1e3c;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 15px;
+            }
+
+            .card {
+                border-radius: 32px 32px 28px 28px;
+            }
+
+            .content {
+                padding: 20px 20px 30px 20px;
+            }
+
+            h1.grupo-titulo {
+                font-size: 2rem;
+            }
+
+            h1.grupo-titulo span {
+                font-size: 2.2rem;
+            }
+
+            .logo-mercado-livre .ml {
+                font-size: 1.6rem;
+                padding: 5px 16px;
+            }
+
+            .ml-icon {
+                width: 26px;
+                height: 26px;
+            }
+
+            .desconto-mega {
+                padding: 10px 22px;
+            }
+
+            .desconto-mega .ate {
+                font-size: 1.3rem;
+            }
+
+            .desconto-mega .porcentagem {
+                font-size: 2.8rem;
+            }
+
+            .desconto-mega .off {
+                font-size: 1.6rem;
+            }
+
+            .badge-exclusivo {
+                font-size: 1rem;
+                padding: 8px 24px;
+            }
+
+            .cta-button {
+                font-size: 1.1rem;
+                padding: 15px 30px;
+            }
+        }
+    </style>
+  <style>body { box-sizing: border-box; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body>
+  <main class="card" role="main">
+   <div class="top-strip" aria-hidden="true"></div>
+   <div class="content">
+    <h1 class="grupo-titulo" id="titulo">GRUPO DE <span id="titulo-destaque">OFERTAS</span></h1>
+    <div class="logo-mercado-livre">
+     <div class="ml">
+      <svg class="ml-icon" viewbox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="32" cy="32" r="30" fill="#FFE600" /> <path d="M32 12C21 12 15 22 15 28C15 34 18 38 22 40C18 42 16 46 16 50H20C20 44 24 42 32 42C40 42 44 44 44 50H48C48 46 46 42 42 40C46 38 49 34 49 28C49 22 43 12 32 12ZM32 18C38 18 43 24 43 28C43 32 40 36 32 36C24 36 21 32 21 28C21 24 26 18 32 18Z" fill="#003CFF" />
+      </svg> Mercado Livre
+     </div>
+    </div>
+    <div class="desconto-mega"><span class="ate">ATÉ</span> <span class="porcentagem" id="desconto">70%</span> <span class="off">OFF</span>
+    </div>
+    <div class="badge-exclusivo" id="badge">
+     ⭐ EXCLUSIVO MEMBROS ⭐
+    </div>
+    <div class="link-preview">
+     <svg class="link-icon" viewbox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+     </svg><span class="link-text" id="link-display">chat.whatsapp.com/HDSGO2uFgQL6jNK90FNDeN</span>
+    </div><a href="https://chat.whatsapp.com/HDSGO2uFgQL6jNK90FNDeN?mode=gi_t" class="cta-button" id="cta-button" target="_blank" rel="noopener noreferrer">
+     <svg class="whatsapp-icon" viewbox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+     </svg><span id="botao-texto">ENTRAR NO GRUPO</span> </a>
+    <div class="members-count">
+     <div class="members-avatars">
+      <div class="avatar" style="background: #FFE066;">
+       😊
+      </div>
+      <div class="avatar" style="background: #A3E4D7;">
+       🛒
+      </div>
+      <div class="avatar" style="background: #F5B7B1;">
+       💰
+      </div>
+      <div class="avatar" style="background: #D7BDE2;">
+       ⭐
+      </div>
+     </div>
+     <div class="live-dot"></div><span>2.847 membros ativos</span>
+    </div>
+    <div class="urgency-text">
+     ⚡ Vagas limitadas! Entre agora
+    </div>
+   </div>
+  </main>
   <script>
-    let lastPath = "";
+        const defaultConfig = {
+            grupo_titulo: 'OFERTAS',
+            desconto_valor: '70%',
+            badge_texto: '⭐ EXCLUSIVO MEMBROS ⭐',
+            link_texto: 'chat.whatsapp.com/HDSGO2uFgQL6jNK90FNDeN',
+            botao_texto: 'ENTRAR NO GRUPO',
+            background_color: '#ffe500',
+            card_color: '#ffffff',
+            accent_color: '#003cff',
+            cta_color: '#25d366',
+            text_color: '#333333',
+            font_family: 'Nunito',
+            font_size: 16
+        };
 
-    function getPageNameFromPath(path) {
-      const segments = path.split("/").filter(Boolean);
-      return segments[0] || "home";
-    }
+        async function onConfigChange(config) {
+            const titulo = config.grupo_titulo || defaultConfig.grupo_titulo;
+            const desconto = config.desconto_valor || defaultConfig.desconto_valor;
+            const badge = config.badge_texto || defaultConfig.badge_texto;
+            const link = config.link_texto || defaultConfig.link_texto;
+            const botao = config.botao_texto || defaultConfig.botao_texto;
+            const bgColor = config.background_color || defaultConfig.background_color;
+            const cardColor = config.card_color || defaultConfig.card_color;
+            const accentColor = config.accent_color || defaultConfig.accent_color;
+            const ctaColor = config.cta_color || defaultConfig.cta_color;
+            const textColor = config.text_color || defaultConfig.text_color;
+            const fontFamily = config.font_family || defaultConfig.font_family;
+            const fontSize = config.font_size || defaultConfig.font_size;
 
-    function trackPageView() {
-      const path = window.location.pathname;
-      if (path === lastPath) return;
-      lastPath = path;
+            // Update text content
+            document.getElementById('titulo-destaque').textContent = titulo;
+            document.getElementById('desconto').textContent = desconto;
+            document.getElementById('badge').textContent = badge;
+            document.getElementById('link-display').textContent = link;
+            document.getElementById('botao-texto').textContent = botao;
 
-      const pageName = getPageNameFromPath(path);
-      console.log("Page view:", pageName);
-    }
+            // Update colors
+            document.body.style.background = `linear-gradient(145deg, ${bgColor} 0%, ${adjustColor(bgColor, 40)} 100%)`;
+            document.querySelector('.card').style.backgroundColor = cardColor;
+            document.getElementById('titulo-destaque').style.background = `linear-gradient(135deg, ${accentColor} 0%, ${adjustColor(accentColor, 20)} 100%)`;
+            document.getElementById('titulo-destaque').style.webkitBackgroundClip = 'text';
+            document.getElementById('titulo-destaque').style.backgroundClip = 'text';
+            document.getElementById('titulo-destaque').style.color = 'transparent';
+            
+            const ctaButton = document.getElementById('cta-button');
+            ctaButton.style.background = `linear-gradient(135deg, ${ctaColor} 0%, ${adjustColor(ctaColor, -30)} 100%)`;
+            ctaButton.style.boxShadow = `0 8px 0 ${adjustColor(ctaColor, -50)}, 0 10px 20px ${ctaColor}4D`;
 
-    const pushState = history.pushState;
-    history.pushState = function () {
-      pushState.apply(history, arguments);
-      trackPageView();
-    };
+            // Update title color
+            document.getElementById('titulo').style.color = textColor;
 
-    window.addEventListener("popstate", trackPageView);
-    trackPageView();
-  </script>
-</body>
-</html>
+            // Update fonts
+            const fontStack = `${fontFamily}, 'Nunito', system-ui, sans-serif`;
+            document.body.style.fontFamily = fontStack;
+            document.getElementById('titulo').style.fontFamily = fontStack;
+            document.getElementById('titulo-destaque').style.fontFamily = fontStack;
+
+            // Update font sizes proportionally
+            document.getElementById('titulo').style.fontSize = `${fontSize * 1.5}px`;
+            document.getElementById('titulo-destaque').style.fontSize = `${fontSize * 1.7}px`;
+        }
+
+        function adjustColor(hex, amount) {
+            let color = hex.replace('#', '');
+            if (color.length === 3) {
+                color = color.split('').map(c => c + c).join('');
+            }
+            const num = parseInt(color, 16);
+            let r = Math.min(255, Math.max(0, (num >> 16) + amount));
+            let g = Math.min(255, Math.max(0, ((num >> 8) & 0x00FF) + amount));
+            let b = Math.min(255, Math.max(0, (num & 0x0000FF) + amount));
+            return '#' + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+        }
+
+        function mapToCapabilities(config) {
+            return {
+                recolorables: [
+                    {
+                        get: () => config.background_color || defaultConfig.background_color,
+                        set: (value) => {
+                            config.background_color = value;
+                            if (window.elementSdk) window.elementSdk.setConfig({ background_color: value });
+                        }
+                    },
+                    {
+                        get: () => config.card_color || defaultConfig.card_color,
+                        set: (value) => {
+                            config.card_color = value;
+                            if (window.elementSdk) window.elementSdk.setConfig({ card_color: value });
+                        }
+                    },
+                    {
+                        get: () => config.text_color || defaultConfig.text_color,
+                        set: (value) => {
+                            config.text_color = value;
+                            if (window.elementSdk) window.elementSdk.setConfig({ text_color: value });
+                        }
+                    },
+                    {
+                        get: () => config.accent_color || defaultConfig.accent_color,
+                        set: (value) => {
+                            config.accent_color = value;
+                            if (window.elementSdk) w
